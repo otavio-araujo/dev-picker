@@ -2,9 +2,10 @@
 
 namespace App\Livewire;
 
+use Livewire\Component;
 use App\Enums\Languages;
 use Illuminate\Support\Facades\Http;
-use Livewire\Component;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DevPickerFront extends Component
 {
@@ -12,19 +13,17 @@ class DevPickerFront extends Component
     public $minFollowers = 5000;
     public $location = 'brasil';
     public $languages = [];
-    public $perPage = 100;
-    public $page = 1;
+    public $perPage = 5;
+    public $currentPage = 1;
+    public $total = 0;
     protected $languagesQuery;
 
     public function searchDev()
     {
         $response = Http::get("https://api.github.com/search/users?{$this->getQueryBuilder()}");
-
-        dd($response->json());
-
-        $this->users = $response->json()['items'] ?? [];
-
-        dd($this->users);
+        $data = $response->json();
+        $this->users = $data['items'] ?? [];
+        $this->total = $data['total_count'] ?? 0;
     }
 
     protected function getQueryBuilder(): string
@@ -71,7 +70,7 @@ class DevPickerFront extends Component
 
     protected function getPageQuery(): mixed
     {
-        return '&page=' . $this->page;
+        return '&page=' . $this->currentPage;
     }
 
     protected function getLocationsQuery(): mixed
@@ -83,8 +82,36 @@ class DevPickerFront extends Component
         return null;
     }
 
+    public function nextPage()
+    {
+        if ($this->currentPage * $this->perPage < $this->total) {
+            $this->currentPage++;
+            $this->searchDev();
+        }
+    }
+
+    public function previousPage()
+    {
+        if ($this->currentPage > 1) {
+            $this->currentPage--;
+            $this->searchDev();
+        }
+    }
+
+
     public function render()
     {
-        return view('livewire.dev-picker-front');
+
+        $paginator = new LengthAwarePaginator(
+            $this->users,
+            $this->total,
+            $this->perPage,
+            $this->currentPage,
+            ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        );
+
+        return view('livewire.dev-picker-front', [
+            'users' => $paginator
+        ]);
     }
 }
