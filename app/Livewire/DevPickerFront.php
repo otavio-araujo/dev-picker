@@ -4,12 +4,18 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Enums\Languages;
+use Github\AuthMethod;
+use Github\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\WithPagination;
 
 class DevPickerFront extends Component
 {
+    use WithPagination;
+
     public $users;
+    public $developers = [];
     public $minFollowers = 5000;
     public $location = 'brasil';
     public $languages = [];
@@ -20,10 +26,19 @@ class DevPickerFront extends Component
 
     public function searchDev()
     {
-        $response = Http::get("https://api.github.com/search/users?{$this->getQueryBuilder()}");
+        $token = config('github.api_token');
+
+        $response = Http::withToken($token)->get("https://api.github.com/search/users?{$this->getQueryBuilder()}");
+
         $data = $response->json();
         $this->users = $data['items'] ?? [];
         $this->total = $data['total_count'] ?? 0;
+
+        // foreach ($this->users as $key => $user) {
+        //     // dd($user['login']);
+        //     $userResponse = Http::withToken($token)->get("https://api.github.com/users/{$user['login']}");
+        //     $this->developers[] = $userResponse->json();
+        // }
     }
 
     protected function getQueryBuilder(): string
