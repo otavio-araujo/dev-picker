@@ -83,8 +83,16 @@
     </div>
 
     <div class="mt-4 w-full overflow-hidden rounded-md bg-white shadow lg:w-2/3">
+        <div class="z-50 flex h-full w-full items-center justify-center" wire:loading>
+            <div class="flex h-full w-full flex-col items-center justify-center gap-y-4">
+                <div
+                    class="spinner-border h-12 w-12 animate-spin rounded-full border-4 border-gray-400 border-t-transparent">
+                </div>
+                <p class="text-md animate-pulse font-medium">Buscando desenvolvedores...</p>
+            </div>
+        </div>
         @empty($users)
-            <div class="flex h-full flex-col items-center justify-center">
+            <div class="flex h-full flex-col items-center justify-center" wire:loading.remove>
                 <svg class="size-20 mb-4 text-slate-400" fill="none" stroke-width="1.5" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" stroke-linecap="round"
@@ -94,7 +102,7 @@
                 <p class="text-center text-slate-700">Nenhum desenvolvedor encontrado</p>
             </div>
         @else
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" wire:loading.remove>
                 <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
                         <th class="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
@@ -184,11 +192,11 @@
                 </tbody>
             </table>
 
-            <div class="flex items-center justify-between px-4 py-4">
+            <div class="flex items-center justify-between p-4" wire:loading.remove>
                 <button @if ($currentPage <= 1) disabled @endif
                     class="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-                    wire:click="previousPage" wire:loading.attr="disabled">
-                    <span class="flex items-center gap-x-2" wire:loading.remove>
+                    wire:click="previousPage">
+                    <span class="flex items-center gap-x-2">
                         <svg class="h-5 w-5 rtl:-scale-x-100" fill="none" stroke-width="1.5" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" stroke-linecap="round"
@@ -199,16 +207,6 @@
                             anterior
                         </span>
                     </span>
-                    <span wire:loading>
-                        <svg class="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"
-                                stroke="currentColor"></circle>
-                            <path class="opacity-75"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                fill="currentColor"></path>
-                        </svg>
-                    </span>
                 </button>
 
                 <div class="text-sm text-gray-700">
@@ -218,7 +216,7 @@
                     @elseif ($this->developerType === 'org')
                         organizações localizadas.
                     @else
-                        organizações e desenvolvedores localizados.
+                        organizações/desenvolvedores localizados.
                     @endif
 
                 </div>
@@ -226,7 +224,7 @@
                 <button @if ($currentPage * $perPage >= $total) disabled @endif
                     class="disabled:opacity-50flex rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
                     wire:click="nextPage" wire:loading.attr="disabled">
-                    <span class="flex items-center gap-x-2" wire:loading.remove>
+                    <span class="flex items-center gap-x-2">
                         <span>
                             próxima
                         </span>
@@ -235,16 +233,6 @@
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" stroke-linecap="round"
                                 stroke-linejoin="round" />
-                        </svg>
-                    </span>
-                    <span wire:loading>
-                        <svg class="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"
-                                stroke="currentColor"></circle>
-                            <path class="opacity-75"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                fill="currentColor"></path>
                         </svg>
                     </span>
                 </button>

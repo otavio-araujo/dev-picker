@@ -13,7 +13,7 @@ class DevPickerFront extends Component
     use WithPagination;
 
     public $users = [];
-    public $minFollowers = 500;
+    public $minFollowers = 50000;
     public $location = 'brasil';
     public $developerType = 'user';
     public $languages = [];
