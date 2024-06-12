@@ -4,8 +4,6 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Enums\Languages;
-use Github\AuthMethod;
-use Github\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\WithPagination;
@@ -14,10 +12,10 @@ class DevPickerFront extends Component
 {
     use WithPagination;
 
-    public $users;
-    public $developers = [];
-    public $minFollowers = 5000;
+    public $users = [];
+    public $minFollowers = 500;
     public $location = 'brasil';
+    public $developerType = 'user';
     public $languages = [];
     public $perPage = 5;
     public $currentPage = 1;
@@ -26,31 +24,42 @@ class DevPickerFront extends Component
 
     public function searchDev()
     {
+        $this->reset('currentPage');
+        $this->fetchDevelopers();
+    }
+
+    protected function fetchDevelopers()
+    {
         $token = config('github.api_token');
 
-        $response = Http::withToken($token)->get("https://api.github.com/search/users?{$this->getQueryBuilder()}");
+        $response = Http::withToken($token)->get("https://api.github.com/search/users", [
+            'q' => $this->getQueryBuilder(),
+            'per_page' => $this->perPage,
+            'page' => $this->currentPage,
+        ]);
 
-        $data = $response->json();
-        $this->users = $data['items'] ?? [];
-        $this->total = $data['total_count'] ?? 0;
+        $usersData = $response->json();
 
-        // foreach ($this->users as $key => $user) {
-        //     // dd($user['login']);
-        //     $userResponse = Http::withToken($token)->get("https://api.github.com/users/{$user['login']}");
-        //     $this->developers[] = $userResponse->json();
-        // }
+        $this->users = $usersData['items'] ?? [];
+        $this->total = $usersData['total_count'] ?? 0;
+
+        if (isset($usersData['items'])) {
+            $this->users = [];
+            foreach ($usersData['items'] as $user) {
+                $userDetails = Http::withToken(config('github.api_token'))->get($user['url'])->json();
+                $this->users[] = $userDetails;
+            }
+        }
     }
 
     protected function getQueryBuilder(): string
     {
-        $queryBuilder = 'q=type:user';
+        $queryBuilder = $this->getDeveloperTypeQuery();
         $queryBuilder .= $this->getFollowersQuery();
         $queryBuilder .= $this->getLocationsQuery();
         $queryBuilder .= $this->getLanguagesQuery();
-        $queryBuilder .= $this->getPerPageQuery();
-        $queryBuilder .= $this->getPageQuery();
 
-        return $queryBuilder;
+        return str_ireplace('+', ' ', $queryBuilder);
     }
 
     public function getLanguageEnumsProperty()
@@ -78,14 +87,13 @@ class DevPickerFront extends Component
         return null;
     }
 
-    protected function getPerPageQuery(): mixed
+    protected function getDeveloperTypeQuery(): mixed
     {
-        return '&per_page=' . $this->perPage;
-    }
-
-    protected function getPageQuery(): mixed
-    {
-        return '&page=' . $this->currentPage;
+        return match ($this->developerType) {
+            'user' => 'type:user',
+            'org' => 'type:org',
+            default => null,
+        };
     }
 
     protected function getLocationsQuery(): mixed
@@ -101,7 +109,7 @@ class DevPickerFront extends Component
     {
         if ($this->currentPage * $this->perPage < $this->total) {
             $this->currentPage++;
-            $this->searchDev();
+            $this->fetchDevelopers();
         }
     }
 
@@ -109,14 +117,12 @@ class DevPickerFront extends Component
     {
         if ($this->currentPage > 1) {
             $this->currentPage--;
-            $this->searchDev();
+            $this->fetchDevelopers();
         }
     }
 
-
     public function render()
     {
-
         $paginator = new LengthAwarePaginator(
             $this->users,
             $this->total,
