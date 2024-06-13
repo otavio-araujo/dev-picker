@@ -13,7 +13,7 @@ class DevPickerFront extends Component
     use WithPagination;
 
     public $users = [];
-    public $minFollowers = 50000;
+    public $minFollowers = 500;
     public $location = 'brasil';
     public $developerType = 'user';
     public $languages = [];
@@ -50,6 +50,11 @@ class DevPickerFront extends Component
                 $this->users[] = $userDetails;
             }
         }
+    }
+
+    public function getTotalPagesProperty()
+    {
+        return ($this->total % $this->perPage) === 0 ? ($this->total / $this->perPage) : intdiv($this->total, $this->perPage) + 1;
     }
 
     protected function getQueryBuilder(): string

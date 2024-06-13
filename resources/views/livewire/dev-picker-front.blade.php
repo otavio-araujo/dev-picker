@@ -1,7 +1,7 @@
-<div class="flex w-full flex-shrink flex-col justify-center gap-4 lg:flex-row">
-    <div class="mt-4 w-full rounded-md bg-white px-6 py-4 shadow lg:w-1/3">
+<div class="flex flex-col justify-center flex-shrink w-full h-full gap-4 lg:flex-row">
+    <div class="w-full px-6 py-4 bg-white rounded-md shadow lg:w-1/3">
         <form wire:submit="searchDev">
-            <div class="mb-4 w-full">
+            <div class="w-full mb-4">
                 <x-label for="minFollowers">Seguidores - Mínimo:</x-label>
                 <x-input class="w-full" id="minFollowers" min="0" placeholder="Quantidade mínima de seguidores..."
                     type='number' wire:model='minFollowers' />
@@ -9,65 +9,65 @@
 
             <x-label>Tipo de Desenvolvedor:</x-label>
             <div
-                class="mb-4 flex flex-wrap gap-3 rounded-md border border-gray-300 p-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                class="flex flex-wrap gap-3 p-4 mb-4 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 <div>
                     <label class="flex items-center" for="user">
-                        <input class="border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" id="user"
+                        <input class="text-indigo-600 border-gray-300 shadow-sm focus:ring-indigo-500" id="user"
                             name="developerType" type="radio" value="user" wire:model="developerType">
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Desenvolvedores') }}</span>
+                        <span class="text-sm text-gray-600 ms-2">{{ __('Desenvolvedores') }}</span>
                     </label>
                 </div>
                 <div>
                     <label class="flex items-center" for="org">
-                        <input class="border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" id="org"
+                        <input class="text-indigo-600 border-gray-300 shadow-sm focus:ring-indigo-500" id="org"
                             name="developerType" type="radio" value="org" wire:model="developerType">
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Organizações') }}</span>
+                        <span class="text-sm text-gray-600 ms-2">{{ __('Organizações') }}</span>
                     </label>
                 </div>
                 <div>
                     <label class="flex items-center" for="user-org">
-                        <input class="border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" id="user-org"
+                        <input class="text-indigo-600 border-gray-300 shadow-sm focus:ring-indigo-500" id="user-org"
                             name="developerType" type="radio" value="user-org" wire:model="developerType">
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Ambos') }}</span>
+                        <span class="text-sm text-gray-600 ms-2">{{ __('Ambos') }}</span>
                     </label>
                 </div>
             </div>
 
             <x-label>Localização:</x-label>
             <div
-                class="mb-4 flex gap-3 rounded-md border border-gray-300 p-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                class="flex gap-3 p-4 mb-4 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 <div>
                     <label class="flex items-center" for="brasil">
-                        <input class="border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" id="brasil"
+                        <input class="text-indigo-600 border-gray-300 shadow-sm focus:ring-indigo-500" id="brasil"
                             name="location" type="radio" value="brasil" wire:model="location">
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Brasil') }}</span>
+                        <span class="text-sm text-gray-600 ms-2">{{ __('Brasil') }}</span>
                     </label>
                 </div>
                 <div>
                     <label class="flex items-center" for="all">
-                        <input class="border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" id="all"
+                        <input class="text-indigo-600 border-gray-300 shadow-sm focus:ring-indigo-500" id="all"
                             name="location" type="radio" value="all" wire:model="location">
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Todas as Localidades') }}</span>
+                        <span class="text-sm text-gray-600 ms-2">{{ __('Todas as Localidades') }}</span>
                     </label>
                 </div>
             </div>
 
             <x-label>Linguagens & Frameworks:</x-label>
             <div
-                class="mb-4 flex flex-row flex-wrap gap-3 rounded-md border border-gray-300 p-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                class="flex flex-row flex-wrap gap-3 p-4 mb-4 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 @foreach ($this->languageEnums as $language => $value)
-                    <label class="flex basis-1/3 items-center" for="{{ $language }}">
+                    <label class="flex items-center basis-1/3" for="{{ $language }}">
                         <x-checkbox id="{{ $language }}" value="{{ $value }}" wire:model="languages" />
-                        <span class="ms-2 text-sm text-gray-600">{{ __($language) }}</span>
+                        <span class="text-sm text-gray-600 ms-2">{{ __($language) }}</span>
                     </label>
                 @endforeach
             </div>
 
-            <div class="mb-4 w-full">
-                <x-button class="mt-2 w-full justify-center" wire:loading.attr='disabled'>
+            <div class="w-full mb-4">
+                <x-button class="justify-center w-full mt-2" wire:loading.attr='disabled'>
                     <span wire:loading.remove>Buscar</span>
                     <span wire:loading>
-                        <svg class="mr-2 h-5 w-5 animate-spin text-white" fill="none" viewBox="0 0 24 24"
+                        <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"
                                 stroke="currentColor"></circle>
@@ -82,18 +82,18 @@
         </form>
     </div>
 
-    <div class="mt-4 w-full overflow-hidden rounded-md bg-white shadow lg:w-2/3">
-        <div class="z-50 flex h-full w-full items-center justify-center" wire:loading>
-            <div class="flex h-full w-full flex-col items-center justify-center gap-y-4">
+    <div class="w-full overflow-hidden bg-white rounded-md shadow lg:w-2/3">
+        <div class="z-50 flex items-center justify-center w-full h-full" wire:loading>
+            <div class="flex flex-col items-center justify-center w-full h-full gap-y-4">
                 <div
-                    class="spinner-border h-12 w-12 animate-spin rounded-full border-4 border-gray-400 border-t-transparent">
+                    class="w-12 h-12 border-4 border-gray-400 rounded-full spinner-border animate-spin border-t-transparent">
                 </div>
-                <p class="text-md animate-pulse font-medium">Buscando desenvolvedores...</p>
+                <p class="font-medium text-md animate-pulse">Buscando desenvolvedores...</p>
             </div>
         </div>
         @empty($users)
-            <div class="flex h-full flex-col items-center justify-center" wire:loading.remove>
-                <svg class="size-20 mb-4 text-slate-400" fill="none" stroke-width="1.5" stroke="currentColor"
+            <div class="flex flex-col items-center justify-center h-full" wire:loading.remove>
+                <svg class="mb-4 size-20 text-slate-400" fill="none" stroke-width="1.5" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" stroke-linecap="round"
                         stroke-linejoin="round" />
@@ -105,38 +105,33 @@
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" wire:loading.remove>
                 <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                        <th class="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                        <th class="xs:hidden px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400 lg:block"
                             scope="col">
                             Desenvolvedor
                         </th>
-                        <th class="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                        <th class="hidden px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400 md:table-cell"
                             scope="col">
-                            Seguidores
+                            <span class="sr-only">Detalhes</span>
                         </th>
-                        <th class="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                            scope="col">
-                            Localização
-                        </th>
-
                         <th
                             class="px-4 py-3.5 text-center text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
-                            Ações
+                            <span class="sr-only">Ações</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     @foreach ($users as $user)
                         <tr>
-                            <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300">
+                            <td class="px-4 py-4 text-sm text-gray-500 whitespace-nowrap dark:text-gray-300">
                                 <div class="flex flex-row items-center justify-between gap-x-2">
                                     <div class="flex items-center gap-x-2">
-                                        <img alt="{{ $user['login'] }}" class="h-8 w-8 rounded-full object-cover"
+                                        <img alt="{{ $user['login'] }}" class="object-cover w-8 h-8 rounded-full"
                                             src="{{ $user['avatar_url'] }}">
                                         <div>
                                             <h2 class="text-sm font-medium text-gray-800 dark:text-white">
                                                 {{ $user['name'] }}
                                             </h2>
-                                            <h2 class="dark:gray-300 text-xs font-medium dark:text-gray-300">
+                                            <h2 class="text-xs font-medium dark:gray-300 dark:text-gray-300">
                                                 {{ $user['login'] }}
                                             </h2>
                                             <p class="text-xs font-normal text-gray-600 dark:text-cyan-100">
@@ -147,8 +142,9 @@
                                 </div>
                             </td>
 
-                            <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300">
-                                <div class="flex items-center gap-x-2 text-xs">
+                            <td
+                                class="hidden px-4 py-4 text-sm text-gray-500 whitespace-nowrap dark:text-gray-300 md:table-cell">
+                                <div class="flex items-center text-xs gap-x-2">
                                     <svg class="size-5" fill="none" stroke-width="1.5" stroke="currentColor"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -157,10 +153,8 @@
                                     </svg>
                                     <span>{{ number_format($user['followers'], 0, ',', '.') }}</span>
                                 </div>
-                            </td>
 
-                            <td class="whitespace-nowrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300">
-                                <div class="flex items-center gap-x-2 text-xs">
+                                <div class="flex items-center text-xs gap-x-2">
                                     <svg class="size-5" fill="none" stroke-width="1.5" stroke="currentColor"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round"
@@ -172,15 +166,27 @@
 
                                     <span>{{ $user['location'] }}</span>
                                 </div>
+
+                                <div class="flex items-center text-xs gap-x-2">
+                                    <svg class="size-5" fill="none" stroke-width="1.5" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
+
+                                    <span>{{ $user['public_repos'] }}</span>
+                                </div>
                             </td>
 
-                            <td class="whitespace-nowrap px-4 py-4 text-sm">
-                                <div class="flex items-center justify-end gap-x-3">
-                                    <a class='flex items-center gap-x-2 rounded-md border px-3 py-1 text-xs capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-600 hover:text-gray-400 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200'
+                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                <div class="flex flex-col items-center gap-y-3">
+                                    <a class='flex items-center justify-center w-full px-3 py-1 text-xs text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2 hover:bg-gray-600 hover:text-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200'
                                         dark:hover:bg-gray-800" href="{{ $user['html_url'] }}" target="_blank">
                                         Selecionar
                                     </a>
-                                    <a class='flex items-center gap-x-2 rounded-md border px-3 py-1 text-xs capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-600 hover:text-gray-400 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200'
+                                    <a class='flex items-center justify-center w-full px-3 py-1 text-xs text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2 hover:bg-gray-600 hover:text-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200'
                                         dark:hover:bg-gray-800" href="{{ $user['html_url'] }}" target="_blank">
                                         Detalhes
                                     </a>
@@ -192,44 +198,48 @@
                 </tbody>
             </table>
 
-            <div class="flex items-center justify-between p-4" wire:loading.remove>
+            <div class="flex items-center justify-between p-4 gap-x-2" wire:loading.remove>
                 <button @if ($currentPage <= 1) disabled @endif
-                    class="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
+                    class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
                     wire:click="previousPage">
                     <span class="flex items-center gap-x-2">
-                        <svg class="h-5 w-5 rtl:-scale-x-100" fill="none" stroke-width="1.5" stroke="currentColor"
+                        <svg class="w-5 h-5 rtl:-scale-x-100" fill="none" stroke-width="1.5" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
 
-                        <span>
+                        <span class="hidden sm:block">
                             anterior
                         </span>
                     </span>
                 </button>
 
-                <div class="text-sm text-gray-700">
-                    {{ $total }}
-                    @if ($this->developerType === 'user')
-                        desenvolvedores localizados.
-                    @elseif ($this->developerType === 'org')
-                        organizações localizadas.
-                    @else
-                        organizações/desenvolvedores localizados.
-                    @endif
-
+                <div class="flex flex-col">
+                    <div class="text-xs font-semibold text-center text-gray-500">
+                        Página: {{ $this->currentPage }} de {{ $this->totalPages }}
+                    </div>
+                    <div class="text-sm text-center text-gray-700">
+                        {{ $total }}
+                        @if ($this->developerType === 'user')
+                            desenvolvedores localizados.
+                        @elseif ($this->developerType === 'org')
+                            organizações localizadas.
+                        @else
+                            organizações/desenvolvedores localizados.
+                        @endif
+                    </div>
                 </div>
 
                 <button @if ($currentPage * $perPage >= $total) disabled @endif
-                    class="disabled:opacity-50flex rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
+                    class="px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md disabled:opacity-50flex hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
                     wire:click="nextPage" wire:loading.attr="disabled">
                     <span class="flex items-center gap-x-2">
-                        <span>
+                        <span class="hidden sm:block">
                             próxima
                         </span>
 
-                        <svg class="h-5 w-5 rtl:-scale-x-100" fill="none" stroke-width="1.5" stroke="currentColor"
+                        <svg class="w-5 h-5 rtl:-scale-x-100" fill="none" stroke-width="1.5" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" stroke-linecap="round"
                                 stroke-linejoin="round" />
