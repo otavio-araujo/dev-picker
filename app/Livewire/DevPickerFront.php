@@ -37,9 +37,10 @@ class DevPickerFront extends Component
             ->send();
     }
 
-    public function selectDeveloper()
+    public function selectDeveloper($github_login)
     {
-        CreateDeveloperAction::execute();
+
+        CreateDeveloperAction::execute($github_login);
         $this->fetchDevelopers();
     }
 

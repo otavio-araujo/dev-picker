@@ -184,7 +184,7 @@
                                 <div class="flex flex-col items-center gap-y-3">
                                     <button
                                         class='flex items-center justify-center w-full px-3 py-1 text-xs text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2 hover:bg-gray-600 hover:text-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200'
-                                        type="button" wire:click='selectDeveloper'>
+                                        type="button" wire:click="selectDeveloper('{{ $user['login'] }}')">
                                         Selecionar
                                     </button>
                                     <button

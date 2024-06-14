@@ -6,10 +6,10 @@ use Filament\Notifications\Notification;
 
 class CreateDeveloperAction
 {
-    public static function execute()
+    public static function execute($github_login)
     {
         Notification::make()
-            ->title('Execute')
+            ->title($github_login)
             ->success()
             ->duration(5000)
             ->send();
