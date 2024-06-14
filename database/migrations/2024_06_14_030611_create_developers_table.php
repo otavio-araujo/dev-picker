@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('developers', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            $table->string('github_name');
             $table->string('github_login')->unique();
             $table->unsignedTinyInteger('rating')->default(0);
             $table->unsignedTinyInteger('status')->default(1);
 
-            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
+            $table->softDeletes('deleted_at', precision: 0);
         });
     }
 

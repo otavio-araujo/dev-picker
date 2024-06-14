@@ -1,5 +1,6 @@
 <div class="flex flex-col justify-center flex-shrink w-full h-full gap-4 lg:flex-row">
     <div class="w-full px-6 py-4 bg-white rounded-md shadow lg:w-1/3">
+
         <form wire:submit="searchDev">
             <div class="w-full mb-4">
                 <x-label for="minFollowers">Seguidores - Mínimo:</x-label>
@@ -182,15 +183,55 @@
 
                             <td class="px-4 py-4 text-sm whitespace-nowrap">
                                 <div class="flex flex-col items-center gap-y-3">
-                                    <button
-                                        class='flex items-center justify-center w-full px-3 py-1 text-xs text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2 hover:bg-gray-600 hover:text-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200'
-                                        type="button" wire:click="selectDeveloper('{{ $user['login'] }}')">
-                                        Selecionar
-                                    </button>
-                                    <button
-                                        class='flex items-center justify-center w-full px-3 py-1 text-xs text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2 hover:bg-gray-600 hover:text-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200'>
-                                        Detalhes
-                                    </button>
+                                    @if ($user['is_selected'] === true)
+                                        <x-danger-button class="justify-center w-full mt-2"
+                                            wire:click="selectDeveloper('{{ $user['url'] }}')"
+                                            wire:loading.attr='disabled'>
+                                            <span wire:loading.remove>remover seleção</span>
+                                            <span wire:loading>
+                                                <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none"
+                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                        stroke-width="4" stroke="currentColor"></circle>
+                                                    <path class="opacity-75"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                        fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </x-danger-button>
+                                    @else
+                                        <x-success-button class="justify-center w-full mt-2"
+                                            wire:click="selectDeveloper('{{ $user['url'] }}')"
+                                            wire:loading.attr='disabled'>
+                                            <span wire:loading.remove>selecionar</span>
+                                            <span wire:loading>
+                                                <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none"
+                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                        stroke-width="4" stroke="currentColor"></circle>
+                                                    <path class="opacity-75"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                        fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </x-success-button>
+                                    @endif
+
+                                    <x-secondary-button class="justify-center w-full mt-2"
+                                        wire:click="developerDetails('{{ $user['url'] }}')"
+                                        wire:loading.attr='disabled'>
+                                        <span wire:loading.remove>Detalhes</span>
+                                        <span wire:loading>
+                                            <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none"
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                    stroke-width="4" stroke="currentColor"></circle>
+                                                <path class="opacity-75"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </span>
+                                    </x-secondary-button>
                                 </div>
                             </td>
                         </tr>
@@ -201,7 +242,7 @@
 
             <div class="flex items-center justify-between p-4 gap-x-2" wire:loading.remove>
                 <button @if ($currentPage <= 1) disabled @endif
-                    class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
+                    class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 disabled:opacity-50 dark:hover:bg-gray-800"
                     wire:click="previousPage">
                     <span class="flex items-center gap-x-2">
                         <svg class="w-5 h-5 rtl:-scale-x-100" fill="none" stroke-width="1.5" stroke="currentColor"
@@ -233,7 +274,7 @@
                 </div>
 
                 <button @if ($currentPage * $perPage >= $total) disabled @endif
-                    class="px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md disabled:opacity-50flex hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
+                    class="px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md disabled:opacity-50flex hover:bg-gray-100 disabled:opacity-50 dark:hover:bg-gray-800"
                     wire:click="nextPage" wire:loading.attr="disabled">
                     <span class="flex items-center gap-x-2">
                         <span class="hidden sm:block">

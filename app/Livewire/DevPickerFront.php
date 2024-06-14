@@ -3,20 +3,24 @@
 namespace App\Livewire;
 
 use App\Actions\Devpicker\Developers\CreateDeveloperAction;
+use App\Enums\DeveloperStatusEnum;
 use Livewire\Component;
 use App\Enums\Languages;
+use App\Models\Developers;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+use function PHPUnit\Framework\returnSelf;
+
 class DevPickerFront extends Component
 {
     use WithPagination;
 
     public $users = [];
-    public $minFollowers = 500;
+    public $minFollowers = 10000;
     public $location = 'brasil';
     public $developerType = 'user';
     public $languages = [];
@@ -29,19 +33,42 @@ class DevPickerFront extends Component
     {
         $this->reset('currentPage');
         $this->fetchDevelopers();
-        Notification::make()
-            ->title('Desenvolvedores localizados com sucesso!')
-            ->info()
-            ->color('info')
-            ->seconds(3)
-            ->send();
     }
 
-    public function selectDeveloper($github_login)
+    public function selectDeveloper($github_user_url)
     {
+        try {
+            $userDetails = Http::withToken(config('github.api_token'))->get($github_user_url)->json();
 
-        CreateDeveloperAction::execute($github_login);
-        $this->fetchDevelopers();
+            if (array_key_exists('status', $userDetails) && $userDetails['status'] === '404') {
+
+                Notification::make()
+                    ->title('Oooops! Algo deu errado...')
+                    ->body('Não foi possivel localizar o desenvolvedor na base de dados do GitHub.')
+                    ->danger()
+                    ->color('danger')
+                    ->send();
+
+                return null;
+            }
+
+            CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']));
+            $this->fetchDevelopers();
+            //
+        } catch (\Throwable $th) {
+
+            Notification::make()
+                ->title('Oooops! Algo deu errado...')
+                ->body('Não foi possivel realizar a comunicação com a API do GitHub.com')
+                ->warning()
+                ->color('warning')
+                ->send();
+        }
+    }
+
+    public function validateDeveloper($github_login)
+    {
+        return null;
     }
 
     protected function fetchDevelopers()
@@ -63,9 +90,17 @@ class DevPickerFront extends Component
             $this->users = [];
             foreach ($usersData['items'] as $user) {
                 $userDetails = Http::withToken(config('github.api_token'))->get($user['url'])->json();
+
+                $userDetails['is_selected'] = $this->isSelected($userDetails['login']);
+
                 $this->users[] = $userDetails;
             }
         }
+    }
+
+    private function isSelected($github_login)
+    {
+        return Developers::where('github_login', $github_login)->first() !== null ? true : false;
     }
 
     public function getTotalPagesProperty()
@@ -143,9 +178,10 @@ class DevPickerFront extends Component
     }
 
 
-    #[Title('DevPicker')]
+    #[Title('Buscar Desenvolvedores')]
     public function render()
     {
+
         $paginator = new LengthAwarePaginator(
             $this->users,
             $this->total,
