@@ -15,6 +15,9 @@
                     <x-nav-link :active="request()->routeIs('home')" href="{{ route('home') }}">
                         {{ __('Buscar Desenvolvedores') }}
                     </x-nav-link>
+                    <x-nav-link :active="request()->routeIs('dashboard')" href="{{ route('dashboard') }}">
+                        {{ __('Desenvolvedores Selecionados') }}
+                    </x-nav-link>
                 </div>
             </div>
 
