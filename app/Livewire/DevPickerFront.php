@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Actions\Devpicker\Developers\CreateDeveloperAction;
 use Livewire\Component;
 use App\Enums\Languages;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Http;
+use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class DevPickerFront extends Component
@@ -26,6 +28,18 @@ class DevPickerFront extends Component
     public function searchDev()
     {
         $this->reset('currentPage');
+        $this->fetchDevelopers();
+        Notification::make()
+            ->title('Desenvolvedores localizados com sucesso!')
+            ->info()
+            ->color('info')
+            ->seconds(3)
+            ->send();
+    }
+
+    public function selectDeveloper()
+    {
+        CreateDeveloperAction::execute();
         $this->fetchDevelopers();
     }
 
