@@ -4,9 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Enums\Languages;
+use Livewire\WithPagination;
+use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Livewire\WithPagination;
 
 class DevPickerFront extends Component
 {
@@ -126,6 +127,8 @@ class DevPickerFront extends Component
         }
     }
 
+
+    #[Title('DevPicker')]
     public function render()
     {
         $paginator = new LengthAwarePaginator(
