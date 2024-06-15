@@ -1,10 +1,12 @@
 {
-    "name": "laravel/laravel",
+    "name": "otavio-araujo/devpicker",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Project to find an keep track of developers using Github API",
     "keywords": [
         "laravel",
-        "framework"
+        "livewire",
+        "alpine",
+        "filament"
     ],
     "license": "MIT",
     "require": {
