@@ -13,7 +13,8 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @filamentStyles
+    @vite('resources/css/app.css')
 
     <!-- Styles -->
     @livewireStyles
@@ -26,21 +27,26 @@
         @livewire('navigation-menu')
 
         <!-- Page Heading -->
-        @if (isset($header))
+        @if (isset($title))
             <header class="bg-white shadow">
                 <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {{ $header }}
+                    {{ $title }}
                 </div>
             </header>
         @endif
 
         <!-- Page Content -->
-        <main class="px-4 mx-auto max-w-7xl">
+        <main class="p-4 mx-auto max-w-7xl">
             {{ $slot }}
         </main>
     </div>
 
     @stack('modals')
+
+    @livewire('notifications')
+
+    @filamentScripts
+    @vite('resources/js/app.js')
 
     @livewireScripts
 </body>

@@ -8,7 +8,7 @@ enum Languages: string
     case LARAVEL = '+language:laravel';
     case LIVEWIRE = '+language:livewire';
     case ALPINEJS = '+language:alpinejs';
-    case TAILWIND = '+language:tailwind';
+    case TAILWIND = '+language:tailwind+language:tailwindcss';
     case VUEJS = '+language:vuejs';
     case CSS = '+language:css';
     case JAVASCRIPT = '+language:javascript+language:js';
