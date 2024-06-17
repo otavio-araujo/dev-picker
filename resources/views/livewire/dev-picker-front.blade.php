@@ -1,4 +1,5 @@
 <div class="flex flex-col justify-center flex-shrink w-full h-full gap-4 lg:flex-row">
+
     <div class="w-full px-6 py-4 bg-white rounded-md shadow lg:w-1/3">
 
         <form wire:submit="searchDev">
@@ -181,7 +182,7 @@
                                 </div>
                             </td>
 
-                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                            <td class="px-4 py-4 text-sm max-w-28 whitespace-nowrap">
                                 <div class="flex flex-col items-center gap-y-3">
                                     @if ($user['is_selected'] === true)
                                         <x-danger-button class="justify-center w-full mt-2"
@@ -218,7 +219,7 @@
                                     @endif
 
                                     <x-secondary-button class="justify-center w-full mt-2"
-                                        wire:click="developerDetails('{{ $user['url'] }}')"
+                                        wire:click="showDeveloperDetails('{{ $user['url'] }}')"
                                         wire:loading.attr='disabled'>
                                         <span wire:loading.remove>Detalhes</span>
                                         <span wire:loading>
