@@ -35,7 +35,7 @@ class DevPickerFront extends Component
         $this->fetchDevelopers();
     }
 
-    public function selectDeveloper($github_user_url)
+    public function getDeveloperDetails($github_user_url)
     {
         try {
             $userDetails = Http::withToken(config('github.api_token'))->get($github_user_url)->json();
@@ -50,10 +50,9 @@ class DevPickerFront extends Component
                     ->send();
 
                 return null;
+            } else {
+                return $userDetails;
             }
-
-            CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']));
-            $this->fetchDevelopers();
             //
         } catch (\Throwable $th) {
 
@@ -66,9 +65,21 @@ class DevPickerFront extends Component
         }
     }
 
-    public function validateDeveloper($github_login)
+    public function selectDeveloper($github_user_url)
     {
-        return null;
+
+        $userDetails = $this->getDeveloperDetails($github_user_url);
+        CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']));
+        $this->fetchDevelopers();
+        //
+
+    }
+
+    public function showDeveloperDetails($github_user_url = 'otavio-araujo')
+    {
+        $developerDetails = $this->getDeveloperDetails($github_user_url);
+
+        $this->dispatch('show-developer-details', $developerDetails)->to(SlideOver::class);
     }
 
     protected function fetchDevelopers()

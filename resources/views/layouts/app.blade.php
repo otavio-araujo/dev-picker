@@ -36,9 +36,14 @@
         @endif
 
         <!-- Page Content -->
+
+
         <main class="p-4 mx-auto max-w-7xl">
+
             {{ $slot }}
+
         </main>
+        <livewire:slide-over />
     </div>
 
     @stack('modals')
