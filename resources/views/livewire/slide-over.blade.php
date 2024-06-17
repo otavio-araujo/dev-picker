@@ -7,9 +7,9 @@
     <div @click.away="open = false"
         class="fixed inset-0 z-50 flex items-center justify-end bg-gray-950/50 dark:bg-gray-950/75" style="display: none;"
         x-show="open" x-transition.duration.300ms.opacity>
-        <div @click="open = false" class="w-2/12 h-full sm:block sm:w-1/3 lg:w-1/2">
+        <div @click="open = false" class="w-2/12 h-full sm:block sm:w-1/4">
         </div>
-        <div class="w-10/12 h-full bg-white sm:w-2/3 lg:w-1/2" x-show="open" x-transition:enter-end="translate-x-0"
+        <div class="w-10/12 h-full bg-white sm:w-3/4" x-show="open" x-transition:enter-end="translate-x-0"
             x-transition:enter-start="translate-x-full rtl:-translate-x-full" x-transition:enter="duration-300"
             x-transition:leave-end="translate-x-full rtl:-translate-x-full" x-transition:leave-start="translate-x-0"
             x-transition:leave="duration-300">
