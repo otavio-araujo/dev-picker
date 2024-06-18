@@ -2,7 +2,7 @@
 
 namespace App\Actions\Devpicker\Developers;
 
-use App\Models\Developers;
+use App\Models\Developer;
 use Filament\Notifications\Notification;
 
 class CreateDeveloperAction
@@ -12,7 +12,7 @@ class CreateDeveloperAction
 
         if ($is_selected === true) {
 
-            $developer = Developers::where('github_login', $github_login)->first()->delete();
+            $developer = Developer::where('github_login', $github_login)->first()->delete();
 
             Notification::make()
                 ->title('Feito!')
@@ -23,12 +23,12 @@ class CreateDeveloperAction
                 ->send();
         } else {
 
-            $developer = Developers::withTrashed()->where('github_login', $github_login)->first();
+            $developer = Developer::withTrashed()->where('github_login', $github_login)->first();
 
             if ($developer !== null) {
                 $developer->restore();
             } else {
-                $developer = Developers::firstOrCreate(
+                $developer = Developer::firstOrCreate(
                     ['github_login' => $github_login],
                     ['user_id' => @auth()->id(), 'github_name' => $github_name]
                 );

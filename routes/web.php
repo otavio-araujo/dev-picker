@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\DevelopersResource;
 use App\Livewire\DevPickerFront;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +14,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/', DevPickerFront::class)->name('home');
+    Route::get('/developers', DevelopersResource::class)->name('developers');
 });

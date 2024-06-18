@@ -6,7 +6,7 @@ use App\Actions\Devpicker\Developers\CreateDeveloperAction;
 use App\Enums\DeveloperStatusEnum;
 use Livewire\Component;
 use App\Enums\Languages;
-use App\Models\Developers;
+use App\Models\Developer;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Http;
@@ -111,7 +111,7 @@ class DevPickerFront extends Component
 
     private function isSelected($github_login)
     {
-        return Developers::where('github_login', $github_login)->first() !== null ? true : false;
+        return Developer::where('github_login', $github_login)->first() !== null ? true : false;
     }
 
     public function getTotalPagesProperty()

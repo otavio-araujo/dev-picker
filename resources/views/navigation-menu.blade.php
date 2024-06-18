@@ -15,7 +15,7 @@
                     <x-nav-link :active="request()->routeIs('home')" href="{{ route('home') }}">
                         {{ __('Buscar Desenvolvedores') }}
                     </x-nav-link>
-                    <x-nav-link :active="request()->routeIs('dashboard')" href="{{ route('dashboard') }}">
+                    <x-nav-link :active="request()->routeIs('developers')" href="{{ route('developers') }}">
                         {{ __('Desenvolvedores Selecionados') }}
                     </x-nav-link>
                 </div>
@@ -160,7 +160,13 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :active="request()->routeIs('home')" href="{{ route('home') }}">
-                {{ __('Dashboard') }}
+                {{ __('Buscar Desenvolvedores') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :active="request()->routeIs('developers')" href="{{ route('developers') }}">
+                {{ __('Desenvolvedores Selecionados') }}
             </x-responsive-nav-link>
         </div>
 
