@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Developer;
-use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
@@ -14,10 +13,10 @@ class DevelopersResource extends Component
     use WithPagination;
 
     public $active = true;
-    public $search;
+    public $search = '';
     public $sortField;
     public $sortAsc = true;
-    protected $queryString = ['search', 'active', 'sortAsc', 'sortField'];
+    protected $queryString = ['search', 'sortAsc', 'sortField'];
 
     public function sortBy($field)
     {
@@ -30,7 +29,7 @@ class DevelopersResource extends Component
         $this->sortField = $field;
     }
 
-    public function updatingSearch()
+    public function updatedSearch()
     {
         $this->resetPage();
     }

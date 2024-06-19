@@ -24,4 +24,17 @@ enum DeveloperStatusEnum: int
             self::FIRED => 'Demitido',
         };
     }
+
+    public function statusColor(): string
+    {
+        return match ($this) {
+            self::SELECTED => 'bg-yellow-100 text-yellow-800',
+            self::CONTACTED => 'bg-cyan-100 text-cyan-800',
+            self::INTERVIEWING => 'bg-fuchsia-100 text-fuchsia-800',
+            self::OFFERED => 'bg-rose-100 text-rose-800',
+            self::HIRED => 'bg-green-100 text-green-800',
+            self::REJECTED => 'bg-orange-100 text-orange-800',
+            self::FIRED => 'bg-red-100 text-red-800',
+        };
+    }
 }
