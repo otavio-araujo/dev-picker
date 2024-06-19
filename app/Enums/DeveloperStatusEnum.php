@@ -37,4 +37,17 @@ enum DeveloperStatusEnum: int
             self::FIRED => 'bg-red-100 text-red-600',
         };
     }
+
+    public function textColor(): string
+    {
+        return match ($this) {
+            self::SELECTED => 'text-slate-600',
+            self::CONTACTED => 'text-cyan-600',
+            self::INTERVIEWING => 'text-fuchsia-600',
+            self::OFFERED => 'text-rose-600',
+            self::HIRED => 'text-green-600',
+            self::REJECTED => 'text-orange-600',
+            self::FIRED => 'text-red-600',
+        };
+    }
 }
