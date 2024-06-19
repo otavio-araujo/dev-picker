@@ -69,7 +69,7 @@ class DevPickerFront extends Component
     {
 
         $userDetails = $this->getDeveloperDetails($github_user_url);
-        CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']));
+        CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']), $userDetails['avatar_url']);
         $this->fetchDevelopers();
         //
 

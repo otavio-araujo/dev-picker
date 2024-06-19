@@ -7,9 +7,8 @@ use Filament\Notifications\Notification;
 
 class CreateDeveloperAction
 {
-    public static function execute($github_login, $github_name, $is_selected)
+    public static function execute($github_login, $github_name, $is_selected, $github_avatar)
     {
-
         if ($is_selected === true) {
 
             $developer = Developer::where('github_login', $github_login)->first()->delete();
@@ -27,10 +26,15 @@ class CreateDeveloperAction
 
             if ($developer !== null) {
                 $developer->restore();
+                $developer->github_name = $github_name;
+                $developer->github_login = $github_login;
+                $developer->github_avatar = $github_avatar;
+                $developer->user_id = @auth()->id();
+                $developer->save();
             } else {
                 $developer = Developer::firstOrCreate(
                     ['github_login' => $github_login],
-                    ['user_id' => @auth()->id(), 'github_name' => $github_name]
+                    ['user_id' => @auth()->id(), 'github_name' => $github_name, 'github_avatar' => $github_avatar]
                 );
             }
 

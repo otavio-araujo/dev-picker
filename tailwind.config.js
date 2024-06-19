@@ -24,5 +24,12 @@ export default {
         },
     },
 
+    safelist: [
+        {
+            /* We want any bg color class to be generated */
+            pattern: /^bg-\w+-\d{2,3}$/,
+        },
+    ],
+
     plugins: [forms, typography],
 };

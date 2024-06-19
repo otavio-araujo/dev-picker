@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('github_name');
             $table->string('github_login')->unique();
+            $table->string('github_avatar')->nullable();
             $table->unsignedTinyInteger('rating')->default(0);
             $table->unsignedTinyInteger('status')->default(1);
 
