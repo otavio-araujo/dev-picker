@@ -19,6 +19,10 @@
                 </div>
             </div>
 
+            <button class="rounded bg-blue-500 px-4 py-2 text-white"
+                wire:click="$dispatchTo('developer-notes-modal', 'show-developer-notes')">Open
+                Modal</button>
+
             <div class="mt-4 overflow-visible border-b border-gray-200 shadow sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
