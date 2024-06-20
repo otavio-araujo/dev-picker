@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-use function PHPUnit\Framework\returnSelf;
-
 class DevPickerFront extends Component
 {
     use WithPagination;
@@ -69,7 +67,7 @@ class DevPickerFront extends Component
     {
 
         $userDetails = $this->getDeveloperDetails($github_user_url);
-        CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']), $userDetails['avatar_url']);
+        CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']), $userDetails['avatar_url'], $userDetails['url']);
         $this->fetchDevelopers();
         //
 
