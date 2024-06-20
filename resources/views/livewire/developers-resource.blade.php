@@ -70,6 +70,7 @@
                     <tbody class="divide-y divide-gray-200 bg-white">
                         @foreach ($developers as $developer)
                             <tr>
+
                                 <td class="whitespace-no-wrap w-4/12 px-6 py-4">
                                     <div class="flex items-center">
                                         <div class="h-10 w-10 flex-shrink-0">
@@ -83,9 +84,28 @@
                                         </div>
                                     </div>
                                 </td>
+
                                 <td class="whitespace-no-wrap px-6 py-4">
                                     <div class="text-sm leading-5 text-gray-900">{{ $developer->github_login }}</div>
                                 </td>
+
+                                <td class="whitespace-no-wrap text-nowrap px-6 py-4">
+                                    <div class="flex items-center">
+                                        @for ($i = 0; $i < 5; $i++)
+                                            <x-icon-button
+                                                class="{{ $i < $developer->rating->value ? 'text-yellow-400 hover:text-gray-400' : 'text-gray-400 hover:text-yellow-400' }} mx-0 px-0"
+                                                wire:click="updateDeveloperRating({{ $developer->id }}, {{ $i + 1 }})">
+                                                <svg class="size-4" fill="currentColor" viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path clip-rule="evenodd"
+                                                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                                                        fill-rule="evenodd" />
+                                                </svg>
+                                            </x-icon-button>
+                                        @endfor
+                                    </div>
+                                </td>
+
                                 <td class="whitespace-no-wrap px-6 py-4">
                                     <div class="flex items-center gap-x-2">
 
@@ -142,22 +162,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="whitespace-no-wrap text-nowrap px-6 py-4">
-                                    <div class="flex items-center">
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <x-icon-button
-                                                class="{{ $i < $developer->rating->value ? 'text-yellow-400 hover:text-gray-400' : 'text-gray-400 hover:text-yellow-400' }} mx-0 px-0"
-                                                wire:click="updateDeveloperRating({{ $developer->id }}, {{ $i + 1 }})">
-                                                <svg class="size-4" fill="currentColor" viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path clip-rule="evenodd"
-                                                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                                                        fill-rule="evenodd" />
-                                                </svg>
-                                            </x-icon-button>
-                                        @endfor
-                                    </div>
-                                </td>
+
                                 <td class="whitespace-no-wrap px-6 py-4 text-right text-sm font-medium leading-5">
                                     <di class="mx-auto flex items-center gap-x-1">
                                         <x-icon-button
@@ -198,6 +203,7 @@
                                         </x-icon-button>
                                     </di class="pag-x-2 flex items-center justify-between"v>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>
