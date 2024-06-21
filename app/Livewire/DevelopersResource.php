@@ -4,15 +4,22 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Developer;
+use Filament\Actions\Action;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Http;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Actions\Concerns\InteractsWithActions;
 
-class DevelopersResource extends Component
+class DevelopersResource extends Component implements HasForms, HasActions
 {
 
     use WithPagination;
+    use InteractsWithActions;
+    use InteractsWithForms;
 
     public $status;
 
@@ -21,6 +28,29 @@ class DevelopersResource extends Component
     public $sortField;
     public $sortAsc = true;
     protected $queryString = ['search', 'sortAsc', 'sortField'];
+
+    public function deleteAction(): Action
+    {
+        return Action::make('delete')
+            ->action(function (array $arguments) {
+                $developer = Developer::find($arguments['developer']);
+
+                $developer?->delete();
+
+                Notification::make()
+                    ->title('Feito!')
+                    ->body('O desenvolvedor <b>' . $developer->github_name . '</b> foi removido com sucesso.')
+                    ->success()
+                    ->color('success')
+                    ->send();
+            })
+            ->requiresConfirmation()
+            ->label('Remover Desenvolvedor')
+            ->icon('heroicon-o-trash')
+            ->iconButton()
+            ->color('danger')
+            ->modalDescription('Você tem certeza que quer remover o desenvolvedor?');
+    }
 
     public function sortBy($field)
     {

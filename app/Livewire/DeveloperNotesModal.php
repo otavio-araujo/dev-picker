@@ -2,15 +2,24 @@
 
 namespace App\Livewire;
 
-use App\Actions\Devpicker\Developers\CreateDeveloperNoteAction;
-use App\Actions\Devpicker\Developers\DeleteDeveloperNoteAction;
 use Livewire\Component;
 use App\Models\Developer;
 use Livewire\Attributes\On;
+use Filament\Actions\Action;
 use App\Models\DeveloperNote;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use App\Actions\Devpicker\Developers\CreateDeveloperNoteAction;
+use App\Actions\Devpicker\Developers\DeleteDeveloperNoteAction;
 
-class DeveloperNotesModal extends Component
+class DeveloperNotesModal extends Component implements HasForms, HasActions
 {
+
+    use InteractsWithActions;
+    use InteractsWithForms;
 
     public $isOpen = false;
     public $developerDetails;
@@ -32,10 +41,31 @@ class DeveloperNotesModal extends Component
         $this->openModal();
     }
 
-    public function deleteDeveloperNote(DeveloperNote $note)
+    public function deleteAction(): Action
     {
-        DeleteDeveloperNoteAction::execute($note);
-        $this->developerNotes = $this->developerDetails->notes;
+        return Action::make('delete')
+            ->action(function (array $arguments) {
+                $developerNote = DeveloperNote::find($arguments['note']);
+
+                $developerName = $developerNote->developer->github_name;
+
+                $developerNote?->delete();
+
+                Notification::make()
+                    ->title('Feito!')
+                    ->body('A anotaçõe de <b>' . $developerName . '</b> foi removida com sucesso.')
+                    ->success()
+                    ->color('success')
+                    ->send();
+
+                $this->openModal();
+            })
+            ->requiresConfirmation()
+            ->label('Remover Anotação do Desenvolvedor')
+            ->icon('heroicon-o-trash')
+            ->iconButton()
+            ->color('danger')
+            ->modalDescription('Você tem certeza que quer remover as anotações?');
     }
 
     public function openModal()
