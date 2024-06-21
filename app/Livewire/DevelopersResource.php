@@ -7,6 +7,7 @@ use App\Models\Developer;
 use Filament\Actions\Action;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -33,16 +34,26 @@ class DevelopersResource extends Component implements HasForms, HasActions
     {
         return Action::make('delete')
             ->action(function (array $arguments) {
-                $developer = Developer::find($arguments['developer']);
 
-                $developer?->delete();
+                if (Gate::check('delete developer') === false) {
+                    Notification::make()
+                        ->title('404 - Permissão Negada!')
+                        ->body("Você não tem autorização para apagar desenvoledores.")
+                        ->warning()
+                        ->color('warning')
+                        ->send();
+                } else {
+                    $developer = Developer::find($arguments['developer']);
 
-                Notification::make()
-                    ->title('Feito!')
-                    ->body('O desenvolvedor <b>' . $developer->github_name . '</b> foi removido com sucesso.')
-                    ->success()
-                    ->color('success')
-                    ->send();
+                    $developer?->delete();
+
+                    Notification::make()
+                        ->title('Feito!')
+                        ->body('O desenvolvedor <b>' . $developer->github_name . '</b> foi removido com sucesso.')
+                        ->success()
+                        ->color('success')
+                        ->send();
+                }
             })
             ->requiresConfirmation()
             ->label('Remover Desenvolvedor')
@@ -70,15 +81,32 @@ class DevelopersResource extends Component implements HasForms, HasActions
 
     public function updateDeveloperStatus(Developer $developer, $developer_status)
     {
-
-        $developer->status = $developer_status;
-        $developer->save();
+        if (Gate::check('edit developer status') === false) {
+            Notification::make()
+                ->title('404 - Permissão Negada!')
+                ->body("Você não tem autorização para alterar o status do desenvolvedor")
+                ->warning()
+                ->color('warning')
+                ->send();
+        } else {
+            $developer->status = $developer_status;
+            $developer->save();
+        }
     }
 
     public function updateDeveloperRating(Developer $developer, $rating)
     {
-        ($developer->rating->value === 1 && $rating === 1) ? $developer->rating = 0 : $developer->rating = $rating;
-        $developer->save();
+        if (Gate::check('edit developer rating') === false) {
+            Notification::make()
+                ->title('404 - Permissão Negada!')
+                ->body("Você não tem autorização para alterar o rating do desenvolvedor")
+                ->warning()
+                ->color('warning')
+                ->send();
+        } else {
+            ($developer->rating->value === 1 && $rating === 1) ? $developer->rating = 0 : $developer->rating = $rating;
+            $developer->save();
+        }
     }
 
     public function getDeveloperDetails($github_user_url)
@@ -113,9 +141,18 @@ class DevelopersResource extends Component implements HasForms, HasActions
 
     public function showDeveloperDetails($github_user_url = 'otavio-araujo')
     {
-        $developerDetails = $this->getDeveloperDetails($github_user_url);
 
-        $this->dispatch('show-developer-details', $developerDetails)->to(SlideOver::class);
+        if (Gate::check('view developer') === false) {
+            Notification::make()
+                ->title('404 - Permissão Negada!')
+                ->body("Você não tem autorização para vizualizar os detalhes do desenvolvedor.")
+                ->warning()
+                ->color('warning')
+                ->send();
+        } else {
+            $developerDetails = $this->getDeveloperDetails($github_user_url);
+            $this->dispatch('show-developer-details', $developerDetails)->to(SlideOver::class);
+        }
     }
 
     #[Title('Desenvolvedores Selecionados')]

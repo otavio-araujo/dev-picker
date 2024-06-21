@@ -7,6 +7,7 @@ use App\Models\Developer;
 use Livewire\Attributes\On;
 use Filament\Actions\Action;
 use App\Models\DeveloperNote;
+use Illuminate\Support\Facades\Gate;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Actions\Contracts\HasActions;
@@ -32,11 +33,20 @@ class DeveloperNotesModal extends Component implements HasForms, HasActions
 
     public function createDeveloperNote()
     {
-        $data = $this->validate();
-
-        CreateDeveloperNoteAction::execute($this->developerDetails, $data['note']);
-        $this->note = '';
-        $this->developerNotes = $this->developerDetails->notes;
+        if (Gate::check('create developer note') === false) {
+            Notification::make()
+                ->title('404 - Permissão Negada!')
+                ->body("Você não tem autorização para cadastrar observações para os desenvolvedores")
+                ->warning()
+                ->color('warning')
+                ->send();
+            $this->note = '';
+        } else {
+            $data = $this->validate();
+            CreateDeveloperNoteAction::execute($this->developerDetails, $data['note']);
+            $this->note = '';
+            $this->developerNotes = $this->developerDetails->notes;
+        }
     }
 
     #[On('show-developer-notes')]
@@ -51,20 +61,31 @@ class DeveloperNotesModal extends Component implements HasForms, HasActions
     {
         return Action::make('delete')
             ->action(function (array $arguments) {
-                $developerNote = DeveloperNote::find($arguments['note']);
+                if (Gate::check('delete developer note') === false) {
+                    Notification::make()
+                        ->title('404 - Permissão Negada!')
+                        ->body("Você não tem autorização para apagar as observações dos desenvolvedores")
+                        ->warning()
+                        ->color('warning')
+                        ->send();
 
-                $developerName = $developerNote->developer->github_name;
+                    $this->openModal();
+                } else {
+                    $developerNote = DeveloperNote::find($arguments['note']);
 
-                $developerNote?->delete();
+                    $developerName = $developerNote->developer->github_name;
 
-                Notification::make()
-                    ->title('Feito!')
-                    ->body('A anotaçõe de <b>' . $developerName . '</b> foi removida com sucesso.')
-                    ->success()
-                    ->color('success')
-                    ->send();
+                    $developerNote?->delete();
 
-                $this->openModal();
+                    Notification::make()
+                        ->title('Feito!')
+                        ->body('A anotaçõe de <b>' . $developerName . '</b> foi removida com sucesso.')
+                        ->success()
+                        ->color('success')
+                        ->send();
+
+                    $this->openModal();
+                }
             })
             ->requiresConfirmation()
             ->label('Remover Anotação do Desenvolvedor')

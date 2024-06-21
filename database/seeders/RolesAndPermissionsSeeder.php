@@ -20,8 +20,11 @@ class RolesAndPermissionsSeeder extends Seeder
         // create permissions
         Permission::create(['name' => 'select developer']);
         Permission::create(['name' => 'edit developer']);
+        Permission::create(['name' => 'edit developer status']);
+        Permission::create(['name' => 'edit developer rating']);
         Permission::create(['name' => 'delete developer']);
         Permission::create(['name' => 'view developer']);
+
         Permission::create(['name' => 'create developer note']);
         Permission::create(['name' => 'edit developer note']);
         Permission::create(['name' => 'delete developer note']);

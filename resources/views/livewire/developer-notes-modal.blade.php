@@ -46,9 +46,11 @@
                                             </h3>
                                         </div>
                                         <div class="flex items-center gap-x-1">
-                                            <div>
-                                                {{ ($this->deleteAction)(['note' => $note->id]) }}
-                                            </div>
+                                            @can('delete developer note')
+                                                <div>
+                                                    {{ ($this->deleteAction)(['note' => $note->id]) }}
+                                                </div>
+                                            @endcan
                                         </div>
                                     </div>
                                     <p class="w-full p-2 text-sm text-gray-700">{{ $note->note }}</p>
@@ -63,36 +65,38 @@
                     @endif
 
                 </ul>
-                <div class="pt-4 mt-4 border-t border-gray-300 p4">
-                    <form wire:submit="createDeveloperNote">
-                        <div class="w-full mb-4">
-                            <x-label for="note">Cadastrar anotações:</x-label>
-                            <textarea
-                                class="@error('note') border border-red-500 @enderror w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                id="note" id="" name="note" rows="3" wire:model='note'></textarea>
-                            @error('note')
-                                <p class="mt-1 text-red-500">{{ $message }}</p>
-                            @enderror
-                        </div>
+                @can('create developer note')
+                    <div class="pt-4 mt-4 border-t border-gray-300 p4">
+                        <form wire:submit="createDeveloperNote">
+                            <div class="w-full mb-4">
+                                <x-label for="note">Cadastrar anotações:</x-label>
+                                <textarea
+                                    class="@error('note') border border-red-500 @enderror w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    id="note" id="" name="note" rows="3" wire:model='note'></textarea>
+                                @error('note')
+                                    <p class="mt-1 text-red-500">{{ $message }}</p>
+                                @enderror
+                            </div>
 
-                        <div class="w-full mb-4">
-                            <x-button class="justify-center w-full mt-2" wire:loading.attr='disabled'>
-                                <span wire:loading.remove>Salvar</span>
-                                <span wire:loading>
-                                    <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"
-                                            stroke="currentColor"></circle>
-                                        <path class="opacity-75"
-                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                </span>
-                            </x-button>
-                        </div>
+                            <div class="w-full mb-4">
+                                <x-button class="justify-center w-full mt-2" wire:loading.attr='disabled'>
+                                    <span wire:loading.remove>Salvar</span>
+                                    <span wire:loading>
+                                        <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"
+                                                stroke="currentColor"></circle>
+                                            <path class="opacity-75"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                fill="currentColor"></path>
+                                        </svg>
+                                    </span>
+                                </x-button>
+                            </div>
 
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                @endcan
             </div>
 
         </div>

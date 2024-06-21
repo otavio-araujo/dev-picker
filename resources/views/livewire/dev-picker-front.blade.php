@@ -190,7 +190,7 @@
                                         @if ($user['is_selected'] === true)
                                             @can('delete developer')
                                                 <x-danger-button class="justify-center w-full mt-2"
-                                                    wire:click="selectDeveloper('{{ $user['url'] }}')"
+                                                    wire:click="selectDeveloper('{{ $user['url'] }}', 'delete')"
                                                     wire:loading.attr='disabled'>
                                                     <span wire:loading.remove>desmarcar</span>
                                                     <span wire:loading>
@@ -208,7 +208,7 @@
                                         @else
                                             @can('select developer')
                                                 <x-success-button class="justify-center w-full mt-2"
-                                                    wire:click="selectDeveloper('{{ $user['url'] }}')"
+                                                    wire:click="selectDeveloper('{{ $user['url'] }}', 'select')"
                                                     wire:loading.attr='disabled'>
                                                     <span wire:loading.remove>selecionar</span>
                                                     <span wire:loading>
