@@ -34,7 +34,15 @@ class DevelopersResource extends Component implements HasForms, HasActions
         return Action::make('delete')
             ->action(function (array $arguments) {
                 $developer = Developer::find($arguments['developer']);
+
                 $developer?->delete();
+
+                Notification::make()
+                    ->title('Feito!')
+                    ->body('O desenvolvedor <b>' . $developer->github_name . '</b> foi removido com sucesso.')
+                    ->success()
+                    ->color('success')
+                    ->send();
             })
             ->requiresConfirmation()
             ->label('Remover Desenvolvedor')

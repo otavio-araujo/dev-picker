@@ -8,6 +8,7 @@ use Livewire\Attributes\On;
 use Filament\Actions\Action;
 use App\Models\DeveloperNote;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -45,15 +46,26 @@ class DeveloperNotesModal extends Component implements HasForms, HasActions
         return Action::make('delete')
             ->action(function (array $arguments) {
                 $developerNote = DeveloperNote::find($arguments['note']);
+
+                $developerName = $developerNote->developer->github_name;
+
                 $developerNote?->delete();
+
+                Notification::make()
+                    ->title('Feito!')
+                    ->body('A anotaçõe de <b>' . $developerName . '</b> foi removida com sucesso.')
+                    ->success()
+                    ->color('success')
+                    ->send();
+
                 $this->openModal();
             })
             ->requiresConfirmation()
-            ->label('Remover Observações do Desenvolvedor')
+            ->label('Remover Anotação do Desenvolvedor')
             ->icon('heroicon-o-trash')
             ->iconButton()
             ->color('danger')
-            ->modalDescription('Você tem certeza que quer remover as opbservações?');
+            ->modalDescription('Você tem certeza que quer remover as anotações?');
     }
 
     public function openModal()
