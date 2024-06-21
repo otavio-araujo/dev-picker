@@ -1,6 +1,7 @@
 <div class="mt-8 flex flex-col">
     <div class="-my-2 sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            {{-- Search --}}
             <div class="flex items-center justify-between">
                 <div class="w-full max-w-lg lg:max-w-xs">
                     <label class="sr-only" for="search">Search</label>
@@ -18,16 +19,13 @@
                     </div>
                 </div>
             </div>
-
-            <button class="rounded bg-blue-500 px-4 py-2 text-white"
-                wire:click="$dispatchTo('developer-notes-modal', 'show-developer-notes')">Open
-                Modal</button>
-
+            {{-- Table --}}
             <div class="mt-4 overflow-visible border-b border-gray-200 shadow sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
 
                         <tr class="bg-gray-200">
+
                             <th class="px-6 py-3 text-left">
                                 <div class="flex items-center">
                                     <button
@@ -37,7 +35,7 @@
                                 </div>
                             </th>
 
-                            <th class="px-6 py-3 text-left">
+                            <th class="hidden px-6 py-3 text-left lg:table-cell">
                                 <div class="flex items-center">
                                     <button
                                         class="text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500"
@@ -46,7 +44,7 @@
                                 </div>
                             </th>
 
-                            <th class="px-6 py-3 text-left">
+                            <th class="hidden px-6 py-3 text-left md:table-cell">
                                 <div class="flex items-center">
                                     <button
                                         class="text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500"
@@ -75,7 +73,7 @@
                         @foreach ($developers as $developer)
                             <tr>
 
-                                <td class="whitespace-no-wrap w-4/12 px-6 py-4">
+                                <td class="whitespace-no-wrap min-w-4/12 px-6 py-4">
                                     <div class="flex items-center">
                                         <div class="h-10 w-10 flex-shrink-0">
                                             <img alt="" class="h-10 w-10 rounded-full"
@@ -89,11 +87,11 @@
                                     </div>
                                 </td>
 
-                                <td class="whitespace-no-wrap px-6 py-4">
+                                <td class="whitespace-no-wrap hidden px-6 py-4 lg:table-cell">
                                     <div class="text-sm leading-5 text-gray-900">{{ $developer->github_login }}</div>
                                 </td>
 
-                                <td class="whitespace-no-wrap text-nowrap px-6 py-4">
+                                <td class="whitespace-no-wrap text-nowrap hidden px-6 py-4 md:table-cell">
                                     <div class="flex items-center">
                                         @for ($i = 0; $i < 5; $i++)
                                             <x-icon-button
@@ -168,7 +166,7 @@
                                 </td>
 
                                 <td class="whitespace-no-wrap px-6 py-4 text-right text-sm font-medium leading-5">
-                                    <di class="mx-auto flex items-center gap-x-1">
+                                    <div class="mx-auto flex items-center gap-x-1">
                                         <x-icon-button
                                             class="text-gray-600 hover:text-gray-700 hover:shadow-sm focus:text-gray-700 active:text-gray-900"
                                             wire:click="showDeveloperDetails('{{ $developer->github_url }}')"
@@ -185,7 +183,8 @@
                                         </x-icon-button>
 
                                         <x-icon-button
-                                            class="text-cyan-600 hover:text-cyan-700 hover:shadow-sm focus:text-cyan-700 active:text-cyan-900">
+                                            class="text-cyan-600 hover:text-cyan-700 hover:shadow-sm focus:text-cyan-700 active:text-cyan-900"
+                                            wire:click="$dispatchTo('developer-notes-modal', 'show-developer-notes', { developer: {{ $developer->id }} })">
                                             <svg class="size-5" fill="none" stroke-width="1.5"
                                                 stroke="currentColor" viewBox="0 0 24 24"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -205,7 +204,7 @@
                                                     stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>
                                         </x-icon-button>
-                                    </di class="pag-x-2 flex items-center justify-between"v>
+                                    </div>
                                 </td>
 
                             </tr>
