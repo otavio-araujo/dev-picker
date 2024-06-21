@@ -27,7 +27,12 @@ export default {
     safelist: [
         {
             /* We want any bg color class to be generated */
-            pattern: /^bg-\w+-\d{2,3}$/,
+            // pattern: /^bg-\w+-\d{2,3}$/,
+            pattern: /bg-(slate|cyan|fuchsia|indigo|green|yellow|red)-(100)/,
+        },
+        {
+            /* We want any bg color class to be generated */
+            pattern: /text-(slate|cyan|fuchsia|indigo|green|yellow|red)-(600)/,
         },
     ],
 
