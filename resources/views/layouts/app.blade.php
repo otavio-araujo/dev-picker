@@ -46,6 +46,7 @@
 
         <livewire:slide-over />
         <livewire:developer-notes-modal />
+
     </div>
 
     @stack('modals')
