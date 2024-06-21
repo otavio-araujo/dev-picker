@@ -8,6 +8,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'role:admin|devpicker',
 ])->group(function () {
     Route::get('/', DevPickerFront::class)->name('home');
     Route::get('/developers', DevelopersResource::class)->name('developers');

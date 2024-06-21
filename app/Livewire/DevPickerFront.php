@@ -186,7 +186,6 @@ class DevPickerFront extends Component
         }
     }
 
-
     #[Title('Buscar Desenvolvedores')]
     public function render()
     {

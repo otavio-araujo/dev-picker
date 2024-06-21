@@ -67,8 +67,12 @@
                     <form wire:submit="createDeveloperNote">
                         <div class="w-full mb-4">
                             <x-label for="note">Cadastrar anotações:</x-label>
-                            <textarea class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            <textarea
+                                class="@error('note') border border-red-500 @enderror w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 id="note" id="" name="note" rows="3" wire:model='note'></textarea>
+                            @error('note')
+                                <p class="mt-1 text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="w-full mb-4">

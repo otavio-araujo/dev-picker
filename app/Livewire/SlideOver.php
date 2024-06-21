@@ -21,13 +21,12 @@ class SlideOver extends Component
 
         $this->developerDetails = $developerDetails;
         $this->developerRepositories = $this->getDeveloperRepositories($developerDetails['repos_url']);
-        // dd($this->getDeveloperRepositories($developerDetails['repos_url']));
     }
 
     public function getDeveloperRepositories($github_user_repos_url)
     {
         try {
-            // $devRepos = Http::withToken(config('github.api_token'))->get('https://api.github.com/users/jajajshiuashduisahduiahs/repos')->json();
+
             $devRepos = Http::withToken(config('github.api_token'))->get($github_user_repos_url)->json();
 
             if (array_key_exists('status', $devRepos) && $devRepos['status'] === '404') {

@@ -19,5 +19,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@devpicker.test',
         ]);
+
+        User::factory()->create([
+            'name' => 'Devpicker',
+            'email' => 'devpicker@devpicker.test',
+        ]);
+
+        $this->call(RolesAndPermissionsSeeder::class);
     }
 }

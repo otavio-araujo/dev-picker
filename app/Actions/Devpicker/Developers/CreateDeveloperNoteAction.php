@@ -10,6 +10,7 @@ class CreateDeveloperNoteAction
 {
     public static function execute(Developer $developer, $note)
     {
+
         $note = DeveloperNote::create([
             'note' => $note,
             'developer_id' => $developer->id,

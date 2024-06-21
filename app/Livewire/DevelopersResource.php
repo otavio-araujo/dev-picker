@@ -77,7 +77,6 @@ class DevelopersResource extends Component implements HasForms, HasActions
 
     public function updateDeveloperRating(Developer $developer, $rating)
     {
-        // dd($developer->rating->value, $rating);
         ($developer->rating->value === 1 && $rating === 1) ? $developer->rating = 0 : $developer->rating = $rating;
         $developer->save();
     }

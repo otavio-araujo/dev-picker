@@ -26,9 +26,15 @@ class DeveloperNotesModal extends Component implements HasForms, HasActions
     public $developerNotes;
     public $note;
 
+    protected $rules = [
+        'note' => 'required|max: 1000|min: 3'
+    ];
+
     public function createDeveloperNote()
     {
-        CreateDeveloperNoteAction::execute($this->developerDetails, $this->note);
+        $data = $this->validate();
+
+        CreateDeveloperNoteAction::execute($this->developerDetails, $data['note']);
         $this->note = '';
         $this->developerNotes = $this->developerDetails->notes;
     }
