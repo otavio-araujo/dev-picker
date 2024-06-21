@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="{{ csrf_token() }}" name="csrf-token">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title !== null ? 'Devpicker - ' . $title : 'Devpicker' }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net" rel="preconnect">
