@@ -188,37 +188,41 @@
                                 <td class="px-4 py-4 text-sm max-w-32 whitespace-nowrap">
                                     <div class="flex flex-col items-center gap-y-3">
                                         @if ($user['is_selected'] === true)
-                                            <x-danger-button class="justify-center w-full mt-2"
-                                                wire:click="selectDeveloper('{{ $user['url'] }}')"
-                                                wire:loading.attr='disabled'>
-                                                <span wire:loading.remove>desmarcar</span>
-                                                <span wire:loading>
-                                                    <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none"
-                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <circle class="opacity-25" cx="12" cy="12" r="10"
-                                                            stroke-width="4" stroke="currentColor"></circle>
-                                                        <path class="opacity-75"
-                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                            </x-danger-button>
+                                            @can('delete developer')
+                                                <x-danger-button class="justify-center w-full mt-2"
+                                                    wire:click="selectDeveloper('{{ $user['url'] }}', 'delete')"
+                                                    wire:loading.attr='disabled'>
+                                                    <span wire:loading.remove>desmarcar</span>
+                                                    <span wire:loading>
+                                                        <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none"
+                                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                                stroke-width="4" stroke="currentColor"></circle>
+                                                            <path class="opacity-75"
+                                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                fill="currentColor"></path>
+                                                        </svg>
+                                                    </span>
+                                                </x-danger-button>
+                                            @endcan
                                         @else
-                                            <x-success-button class="justify-center w-full mt-2"
-                                                wire:click="selectDeveloper('{{ $user['url'] }}')"
-                                                wire:loading.attr='disabled'>
-                                                <span wire:loading.remove>selecionar</span>
-                                                <span wire:loading>
-                                                    <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none"
-                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <circle class="opacity-25" cx="12" cy="12" r="10"
-                                                            stroke-width="4" stroke="currentColor"></circle>
-                                                        <path class="opacity-75"
-                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                            fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                            </x-success-button>
+                                            @can('select developer')
+                                                <x-success-button class="justify-center w-full mt-2"
+                                                    wire:click="selectDeveloper('{{ $user['url'] }}', 'select')"
+                                                    wire:loading.attr='disabled'>
+                                                    <span wire:loading.remove>selecionar</span>
+                                                    <span wire:loading>
+                                                        <svg class="w-5 h-5 mr-2 text-white animate-spin" fill="none"
+                                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                                stroke-width="4" stroke="currentColor"></circle>
+                                                            <path class="opacity-75"
+                                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                fill="currentColor"></path>
+                                                        </svg>
+                                                    </span>
+                                                </x-success-button>
+                                            @endcan
                                         @endif
 
                                         <x-secondary-button class="justify-center w-full mt-2"

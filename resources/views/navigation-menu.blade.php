@@ -82,6 +82,7 @@
 
                     <!-- Settings Dropdown -->
                     <div class="relative ms-3">
+
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -123,6 +124,12 @@
                                         {{ __('API Tokens') }}
                                     </x-dropdown-link>
                                 @endif
+
+                                <div class="border-t border-gray-200"></div>
+
+                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                    {{ __('Usuários') }}
+                                </x-dropdown-link>
 
                                 <div class="border-t border-gray-200"></div>
 

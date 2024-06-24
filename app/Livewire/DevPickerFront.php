@@ -2,20 +2,23 @@
 
 namespace App\Livewire;
 
-use App\Actions\Devpicker\Developers\CreateDeveloperAction;
-use App\Enums\DeveloperStatusEnum;
 use Livewire\Component;
 use App\Enums\Languages;
 use App\Models\Developer;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use App\Enums\DeveloperStatusEnum;
 use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Actions\Devpicker\Developers\CreateDeveloperAction;
+use Illuminate\Support\Facades\Gate;
 
 class DevPickerFront extends Component
 {
     use WithPagination;
+    use AuthorizesRequests;
 
     public $users = [];
     public $minFollowers = 10000;
@@ -63,21 +66,42 @@ class DevPickerFront extends Component
         }
     }
 
-    public function selectDeveloper($github_user_url)
+    public function selectDeveloper($github_user_url, $action)
     {
 
-        $userDetails = $this->getDeveloperDetails($github_user_url);
-        CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']), $userDetails['avatar_url'], $userDetails['url']);
-        $this->fetchDevelopers();
-        //
+        $ability = match ($action) {
+            'select'  => 'select developer',
+            'delete'  => 'delete developer'
+        };
 
+        if (Gate::check($ability) === false) {
+            Notification::make()
+                ->title('404 - Permissão Negada!')
+                ->body("Você não tem autorização para marcar/remover desenvolvedores")
+                ->warning()
+                ->color('warning')
+                ->send();
+        } else {
+            $userDetails = $this->getDeveloperDetails($github_user_url);
+            CreateDeveloperAction::execute($userDetails['login'], $userDetails['name'], $this->isSelected($userDetails['login']), $userDetails['avatar_url'], $userDetails['url']);
+            $this->fetchDevelopers();
+        }
     }
 
     public function showDeveloperDetails($github_user_url = 'otavio-araujo')
     {
-        $developerDetails = $this->getDeveloperDetails($github_user_url);
 
-        $this->dispatch('show-developer-details', $developerDetails)->to(SlideOver::class);
+        if (Gate::check('view developer') === false) {
+            Notification::make()
+                ->title('404 - Permissão Negada!')
+                ->body('Você não tem autorização para vizualizar os detalhes do desenvolvedores')
+                ->warning()
+                ->color('warning')
+                ->send();
+        } else {
+            $developerDetails = $this->getDeveloperDetails($github_user_url);
+            $this->dispatch('show-developer-details', $developerDetails)->to(SlideOver::class);
+        }
     }
 
     protected function fetchDevelopers()
@@ -185,7 +209,6 @@ class DevPickerFront extends Component
             $this->fetchDevelopers();
         }
     }
-
 
     #[Title('Buscar Desenvolvedores')]
     public function render()
