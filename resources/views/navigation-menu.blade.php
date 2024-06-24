@@ -127,7 +127,7 @@
 
                                 <div class="border-t border-gray-200"></div>
 
-                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                <x-dropdown-link href="{{ route('users') }}">
                                     {{ __('Usuários') }}
                                 </x-dropdown-link>
 

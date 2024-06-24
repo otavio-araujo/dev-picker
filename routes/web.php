@@ -2,6 +2,7 @@
 
 use App\Livewire\DevelopersResource;
 use App\Livewire\DevPickerFront;
+use App\Livewire\UsersResource;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
@@ -12,4 +13,5 @@ Route::middleware([
 ])->group(function () {
     Route::get('/', DevPickerFront::class)->name('home');
     Route::get('/developers', DevelopersResource::class)->name('developers');
+    Route::get('/users', UsersResource::class)->name('users');
 });
