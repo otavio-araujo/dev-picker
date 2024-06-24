@@ -30,16 +30,21 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'delete developer note']);
         Permission::create(['name' => 'view developer note']);
 
-        $role = Role::create(['name' => 'admin']);
-        $role->givePermissionTo(Permission::all());
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'delete user']);
+        Permission::create(['name' => 'view user']);
 
-        $role = Role::create(['name' => 'devpicker'])
-            ->givePermissionTo(['select developer', 'view developer', 'view developer note']);
+        $role = Role::create(['name' => 'admin']);
+
+        $role = Role::create(['name' => 'devpicker']);
 
         $admin = User::find(1);
         $admin->assignRole('admin');
+        $admin->givePermissionTo(Permission::all());
 
         $devpicker = User::find(2);
         $devpicker->assignRole('devpicker');
+        $devpicker->givePermissionTo(['select developer', 'view developer', 'view developer note']);
     }
 }
