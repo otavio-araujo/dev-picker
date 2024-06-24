@@ -7,14 +7,17 @@ use Livewire\Component;
 use Filament\Actions\Action;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Spatie\Permission\Models\Role;
+use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\TagsInput;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Notifications\Notification;
 use Spatie\Permission\Models\Permission;
 use Filament\Actions\Contracts\HasActions;
@@ -107,11 +110,84 @@ class UsersResource extends Component implements HasForms, HasActions
             ->slideOver();
     }
 
+    public function editAction(): Action
+    {
+        return EditAction::make()
+            ->record(function (array $arguments) {
+                $user = User::find($arguments['user']);
+                return $user;
+            })
+            ->form([
+                TextInput::make('name')
+                    ->translateLabel()
+                    ->required(),
+                TextInput::make('email')
+                    ->translateLabel()
+                    ->required()
+                    ->unique(column: 'email', ignoreRecord: true),
+
+                Select::make('role_id')
+                    ->label('Tipo de usuário')
+                    ->required()
+                    ->extraAttributes(['class' => 'capitalize'])
+                    ->options(Role::query()->pluck('name', 'name')->toArray())
+                    ->formatStateUsing(function (?Model $record) {
+                        return $record->getRoleNames()->toArray();
+                    })
+                    ->native(false),
+                Select::make('permissions')
+                    ->translateLabel()
+                    ->extraAttributes(['class' => 'capitalize'])
+                    ->options(Permission::query()->pluck('name', 'name'))
+                    ->formatStateUsing(function (?Model $record) {
+                        return $record->getAllPermissions()->pluck('name');
+                    })
+                    ->multiple()
+                    ->searchable()
+                    ->native(false)
+                    ->required(),
+
+            ])
+            ->action(function (array $data, Model $record): void {
+
+                if (Gate::check('edit user') === false) {
+                    Notification::make()
+                        ->title('404 - Permissão Negada!')
+                        ->body("Você não tem autorização para editar usuários.")
+                        ->warning()
+                        ->color('warning')
+                        ->send();
+                } else {
+                    $record->name = $data['name'];
+                    $record->email = $data['email'];
+                    $record->save();
+                    $record->syncRoles($data['role_id']);
+                    $record->syncPermissions($data['permissions']);
+
+                    Notification::make()
+                        ->title('Feito!')
+                        ->body("Usuário atualizado com sucesso!")
+                        ->success()
+                        ->color('success')
+                        ->send();
+                }
+            })
+            ->label('Editar Usuário')
+            ->icon('heroicon-o-pencil-square')
+            ->iconButton()
+            ->color('warning')
+            ->modalHeading('Editar usuário')
+            ->requiresConfirmation()
+            ->modalWidth(MaxWidth::FourExtraLarge)
+            ->slideOver();
+    }
+
     public function viewAction(): Action
     {
         return ViewAction::make('view')
             ->record(function (array $arguments) {
                 $user = User::find($arguments['user']);
+                $user->permissions = $user->getAllPermissions();
                 return $user;
             })
             ->mutateRecordDataUsing(function (array $data): array {
@@ -127,6 +203,14 @@ class UsersResource extends Component implements HasForms, HasActions
                 TextInput::make('role')
                     ->extraInputAttributes(['class' => 'capitalize'])
                     ->label('Tipo de usuário'),
+                Select::make('permissions')
+                    ->label('Permissões de usuário')
+                    ->extraAttributes(['class' => 'capitalize'])
+                    ->formatStateUsing(function (?Model $record) {
+                        return $record->getAllPermissions()->pluck('name')->toArray();
+                    })
+                    ->multiple()
+                    ->native(false),
             ])
             ->label('Detalhar Usuário')
             ->icon('heroicon-o-eye')
