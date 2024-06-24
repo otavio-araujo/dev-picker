@@ -1,66 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# DEVPICKER
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repo is currently a work in progress — PRs and issues welcome!
 
-## About Laravel
+# Getting started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/11.x)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Clone the repository
 
-## Learning Laravel
+    git clone https://github.com/otavio-araujo/dev-picker.git
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Switch to the repo folder
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    cd dev-picker
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Install all the dependencies using composer and npm
 
-## Laravel Sponsors
+    composer install
+    npm install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Copy the example env file and make the required configuration changes in the .env file
 
-### Premium Partners
+    cp .env.example .env
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Generate a new application key
 
-## Contributing
+    php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Run the database migrations and seeders (**Set the database connection in .env before migrating**)
 
-## Code of Conduct
+    php artisan migrate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Build your assets & start the local development server
 
-## Security Vulnerabilities
+    npm run build
+    npm run dev
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Command list**
+
+    git clone https://github.com/otavio-araujo/dev-picker.git
+    cd dev-picker
+    composer install
+    npm install
+    cp .env.example .env
+    php artisan key:generate
+    php artisan migrate
+    npm run build
+    npm run dev
+
+## Database seeding
+
+**You need to populate the database to create initial users, roles and permissions**
+
+Open the terminal run the following command:
+
+    php artisan db:seed
+
+Default Admin Role login information:
+
+    email: admin@devpicker.test
+    password: password
+
+Default Devpicker Role login information:
+
+    email: devpicker@devpicker.test
+    password: password
+
+**_Note_** : It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
+
+    php artisan migrate:refresh
+
+### Overview
+
+This application offers support for real-time currency exchange rates. This feature is disabled by default. To enable it, you must first register for an API key at [ExchangeRate-API](https://www.exchangerate-api.com/). The application uses this service due to its generous provision of up to 1,500 free API calls per month, which should be enough for development and testing purposes.
+
+**Disclaimer**: There is no affiliation between this application and ExchangeRate-API.
+
+Once you have your API key, you can enable the feature by setting the `CURRENCY_API_KEY` environment variable in your `.env` file.
+
+### Initial Setup
+
+After setting your API key in the `.env` file, it is essential to set your `GITHUB_API_TOKEN` to ensure that the API accepts the correct comunication with the aplication.
+
+So, open your `.env` file and create a new `GITHUB_API_TOKEN` key and paste your Token:
+
+`GITHUB_API_TOKEN=github_pat_11AHIXSGY0PxxGnGX1c....`
+
+This ensures the correct comunication whit Github Restfull API.
+
+## Automatic Translation
+
+The application now supports automatic translation, leveraging machine translation services provided by AWS, as facilitated by the [andrewdwallo/transmatic](https://github.com/andrewdwallo/transmatic) package. This integration significantly enhances the application's accessibility for a global audience. The application currently offers support for several languages, including English, Arabic, German, Spanish, French, Indonesian, Italian, Dutch, Portuguese, Turkish, and Chinese, with English as the default language.\*\*\*\*
+
+## Dependencies
+
+-   [filamentphp/actions](https://github.com/filamentphp/filament) - Open interactive modals and slide-overs - a great way to keep the user in the flow of the application.
+-   [filamentphp/notifications](https://github.com/filamentphp/filament) - Notify your users of important events by delivering real-time messages using Livewire.
+-   [knplabs/github-api](https://github.com/KnpLabs/php-github-api) - A simple Object Oriented wrapper for GitHub API, written with PHP.
+    Uses GitHub API v3 & supports GitHub API v4. The object API (v3) is very similar to the RESTful API.
+-   [laravel/jetstream](https://github.com/laravel/jetstream) - Laravel Jetstream is a beautifully designed application scaffolding for Laravel. Jetstream provides the perfect starting point for your next Laravel application and includes login, registration, email verification, two-factor authentication, session management, API support via Laravel Sanctum, and optional team management.
+-   [spatie/laravel-permission](https://github.com/spatie/laravel-permission) - This package allows you to manage user permissions and roles in a database.
+
+**_Note_** : It is recommended to read the documentation for all dependencies to get yourself familiar with how the application works.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
