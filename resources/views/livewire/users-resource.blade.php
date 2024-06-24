@@ -18,9 +18,11 @@
                             id="search" placeholder="Buscar" type="search" wire:model.live="search">
                     </div>
                 </div>
-                <div class="whitespace-nowrap">
-                    <x-button class="">Novo Usuário</x-button>
-                </div>
+                @can('create user')
+                    <div class="whitespace-nowrap">
+                        {{ $this->createFormAction }}
+                    </div>
+                @endcan
             </div>
             {{-- Table --}}
             <div class="mt-4 overflow-visible border-b border-gray-200 shadow sm:rounded-lg">
@@ -92,7 +94,7 @@
 
                                 <td class="hidden px-6 py-4 whitespace-no-wrap lg:table-cell">
                                     <div class="text-sm leading-5 text-gray-900 capitalize">
-                                        {{ $user->roles[0]['name'] }}
+                                        {{ $user->roles[0]['name'] ?? null }}
                                     </div>
                                 </td>
 
@@ -216,10 +218,16 @@
                                             </x-icon-button> --}}
                                         @endcan
 
-                                        @can('delete developer')
-                                            {{-- <div>
-                                                {{ ($this->deleteAction)(['developer' => $user->id]) }}
-                                            </div> --}}
+                                        @can('view user')
+                                            <div>
+                                                {{ ($this->viewAction)(['user' => $user->id]) }}
+                                            </div>
+                                        @endcan
+
+                                        @can('delete user')
+                                            <div>
+                                                {{ ($this->deleteAction)(['user' => $user->id]) }}
+                                            </div>
                                         @endcan
                                     </div>
                                 </td>

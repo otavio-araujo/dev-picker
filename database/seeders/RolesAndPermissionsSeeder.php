@@ -30,6 +30,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'delete developer note']);
         Permission::create(['name' => 'view developer note']);
 
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'delete user']);
+        Permission::create(['name' => 'view user']);
+
         $role = Role::create(['name' => 'admin']);
         $role->givePermissionTo(Permission::all());
 
