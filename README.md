@@ -1,13 +1,5 @@
 # DEVPICKER
 
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/login.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers-search-result.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers-search-details.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-list.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-details.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-confirmation-modals.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-notes.png">
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/profile-settings.png">
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/user-management.png">
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/users-create.png">
@@ -136,6 +128,36 @@ Default Devpicker (CTO) Role login information:
 
     email: devpicker@devpicker.test
     password: password
+
+# Find Developers
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers.png">
+
+This feature is used to find and select developers from Github Restfull API. You can filter developers by number of followers, if they are a person or organization, if they are located in Brazil or Globally and you can select what languages or frameworks you want to search for.
+
+# Select Developers
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers-search-result.png">
+
+Once you got the search result, you now can select the developer or view their details by clicking on the corresponding button. When you click select button the application saves this record on Selected Developers Resource. You can access this resource by clicking on the corresponding Navigation link.
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers-search-details.png">
+
+# Developer Resource
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-list.png">
+
+This feature lists on a datatable all selected developers. You can rate the developer by clicking os the stars fron the corresponding column. You can also change the developer status by clicking on status badge.
+
+At the end of datatable it has optins to see developer's details from Github, Add notes to developers and soft-delete them. The application pop's up a modal dialog to confirm if you really want to delete the developer.
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-details.png">
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-notes.png">
+
+You can create and delete as many notes as you like!
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-confirmation-modals.png">
 
 ## Dependencies
 
