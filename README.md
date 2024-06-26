@@ -112,14 +112,12 @@ A aplicação está pré-configurada para utilizar o Mailgun como driver de envi
 
 Para configurar o mailgin, adicione ao .env as seguintes informações de sua conta Mailgun:
 
-<code>
-`MAIL_MAILER=mailgun`
+<code>`MAIL_MAILER=mailgun`
 `MAILGUN_DOMAIN=your-mailgun-domain`
 `MAILGUN_SECRET=your-api-key`
 `MAILGUN_ENDPOINT=api.mailgun.net`
 `MAIL_FROM_ADDRESS=no-reply@devpicker.com`
-`MAIL_FROM_NAME="${APP_NAME}"`
-</code>
+`MAIL_FROM_NAME="${APP_NAME}"`</code>
 
 ## Screenshots Explained
 
