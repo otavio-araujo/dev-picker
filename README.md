@@ -113,7 +113,7 @@ MAIL_FROM_NAME="${APP_NAME}"</code>
 
 ## Screenshots Explained
 
-# Login page
+### Login page
 
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/login.png">
 
@@ -129,13 +129,13 @@ Default Devpicker (CTO) Role login information:
     email: devpicker@devpicker.test
     password: password
 
-# Find Developers
+### Find Developers
 
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers.png">
 
 This feature is used to find and select developers from Github Restfull API. You can filter developers by number of followers, if they are a person or organization, if they are located in Brazil or Globally and you can select what languages or frameworks you want to search for.
 
-# Select Developers
+### Select Developers
 
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers-search-result.png">
 
@@ -143,13 +143,13 @@ Once you got the search result, you now can select the developer or view their d
 
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/find-developers-search-details.png">
 
-# Developer Resource
+### Developer Resource
 
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-list.png">
 
 This feature lists on a datatable all selected developers. You can rate the developer by clicking os the stars fron the corresponding column. You can also change the developer status by clicking on status badge.
 
-At the end of datatable it has optins to see developer's details from Github, Add notes to developers and soft-delete them. The application pop's up a modal dialog to confirm if you really want to delete the developer.
+The last datatable's column has actions to see developer's details from Github, Add notes to developers and soft-delete them. The application pop's up a modal dialog to confirm if you really want to delete the developer.
 
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-details.png">
 
