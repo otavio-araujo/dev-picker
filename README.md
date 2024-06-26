@@ -1,11 +1,5 @@
 # DEVPICKER
 
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/profile-settings.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/user-management.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/users-create.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/users-show.png">
-<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/users-edit.png">
-
 This repo is currently a work in progress — PRs and issues welcome!
 
 # Getting started
@@ -158,6 +152,24 @@ The last datatable's column has actions to see developer's details from Github, 
 You can create and delete as many notes as you like!
 
 <img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/dvelopers-resources-confirmation-modals.png">
+
+### Profile Settings
+
+It cames with JetStream package.
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/profile-settings.png">
+
+### User Management Resource
+
+This feature provides access control and user management. You can control what the user can or can not access and do through Roles and Permissions.
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/user-management.png">
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/users-create.png">
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/users-show.png">
+
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/users-edit.png">
 
 ## Dependencies
 
