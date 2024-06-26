@@ -133,7 +133,7 @@
                                                 class="object-cover w-8 h-8 border border-gray-100 rounded-full"
                                                 src="{{ $user['avatar_url'] }}">
                                             <div>
-                                                <h2 class="text-sm font-medium text-gray-800 dark:text-white">
+                                                <h2 class="text-sm font-medium text-gray-800 text-wrap dark:text-white">
                                                     {{ $user['name'] }}
                                                 </h2>
                                                 <h2 class="text-xs font-medium dark:gray-300 dark:text-gray-300">
@@ -298,7 +298,6 @@
                         </span>
                     </button>
                 </div>
-                </ class="flex flex-col items-center justify-between">
             @endempty
         </div>
     </div>

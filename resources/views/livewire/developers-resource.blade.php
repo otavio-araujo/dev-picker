@@ -53,7 +53,7 @@
                                 </div>
                             </th>
 
-                            <th class="px-6 py-3 text-left">
+                            <th class="hidden px-6 py-3 text-left md:table-cell">
                                 <div class="flex items-center">
                                     <button
                                         class="text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">Status</button>
@@ -120,7 +120,7 @@
                                     </div>
                                 </td>
 
-                                <td class="whitespace-no-wrap px-6 py-4">
+                                <td class="whitespace-no-wrap hidden px-6 py-4 md:table-cell">
                                     <div class="flex items-center gap-x-2">
 
                                         <div class="flex justify-center">
@@ -130,16 +130,16 @@
                                                     if (this.open) {
                                                         return this.close()
                                                     }
-                                            
+
                                                     this.$refs.button.focus()
-                                            
+
                                                     this.open = true
                                                 },
                                                 close(focusAfter) {
                                                     if (!this.open) return
-                                            
+
                                                     this.open = false
-                                            
+
                                                     focusAfter && focusAfter.focus()
                                                 }
                                             }" x-id="['dropdown-button']"

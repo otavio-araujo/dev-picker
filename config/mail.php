@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => env('MAIL_MAILER', 'mailgun'),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,6 +36,14 @@ return [
     */
 
     'mailers' => [
+
+        'mailgun' => [
+            'transport' => 'mailgun',
+            'from' => [
+                'address' => env('MAIL_FROM_ADDRESS', 'no-reply@devpicker.com'),
+                'name' => env('MAIL_FROM_NAME', 'Devpicker'),
+            ],
+        ],
 
         'smtp' => [
             'transport' => 'smtp',
