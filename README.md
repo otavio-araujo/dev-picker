@@ -106,6 +106,36 @@ So, open your `.env` file and create a new `GITHUB_API_TOKEN` key and paste your
 
 This ensures the correct comunication whit Github Restfull API.
 
+## Mailgun
+
+A aplicação está pré-configurada para utilizar o Mailgun como driver de envio de emails. O envio de emails é utilizado para recuperação de senha.
+
+Para configurar o mailgin, adicione ao .env as seguintes informações de sua conta Mailgun:
+
+`MAIL_MAILER=mailgun`
+`MAILGUN_DOMAIN=your-mailgun-domain`
+`MAILGUN_SECRET=your-api-key`
+`MAILGUN_ENDPOINT=api.mailgun.net`
+`MAIL_FROM_ADDRESS=no-reply@devpicker.com`
+`MAIL_FROM_NAME="${APP_NAME}"`
+
+##Screenshots Explained
+
+#Login page
+<img width="1920" alt="Screenshot 2024-05-07 at 10 01 46 PM" src="public/assets/screenshots/login.png">
+
+This featurs is just a simple login page. The credentials are:
+
+Default Admin Role login information:
+
+    email: admin@devpicker.test
+    password: password
+
+Default Devpicker (CTO) Role login information:
+
+    email: devpicker@devpicker.test
+    password: password
+
 ## Dependencies
 
 -   [filamentphp/actions](https://github.com/filamentphp/filament) - Open interactive modals and slide-overs - a great way to keep the user in the flow of the application.
