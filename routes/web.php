@@ -12,6 +12,7 @@ Route::middleware([
     'role:admin|devpicker',
 ])->group(function () {
     Route::get('/', DevPickerFront::class)->name('home');
+    Route::get('/dashboard', DevPickerFront::class)->name('dashboard');
     Route::get('/developers', DevelopersResource::class)->name('developers');
     Route::get('/users', UsersResource::class)->name('users');
 });
